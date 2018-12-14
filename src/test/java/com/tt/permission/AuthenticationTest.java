@@ -34,10 +34,13 @@ public class AuthenticationTest {
 
 //        2、主体提交认证请求
         SecurityUtils.setSecurityManager(defaultSecurityManager);
+        //        获取认证的主体
         Subject subject = SecurityUtils.getSubject();
+        //        通过用户名和密码获取UsernamePasswordToken
         UsernamePasswordToken token = new UsernamePasswordToken("admin", "123");
+        //        通过token进行登录认证
         subject.login(token);
-
+//        打印出是否认证成功
         System.out.println("isAuthenticated(是否认证):"+subject.isAuthenticated());
 
 //        检查登录用户是否具备拥有的角色
