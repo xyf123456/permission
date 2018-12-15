@@ -75,5 +75,20 @@ public class LoginController {
     public String index() {
         return "index";
     }
+
+    @RequestMapping("/logout")
+    public String logout() {
+        // 1、获取Subject
+        Subject subject = SecurityUtils.getSubject();
+
+        // 2、执行注销
+        try {
+            subject.logout();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return "redirect:login";
+        }
+    }
 }
 
