@@ -39,10 +39,7 @@ public class JdbcRealm1Test {
         jdbcRealm.setAuthenticationQuery(authenticationSql);
 
         //        设置认证角色的语句（根据自己的设计的表）
-        String roleSql = "SELECT rolename" +
-                "FROM sys_role r INNER JOIN sys_user u" +
-                "ON r.roleid=u.roleid" +
-                "WHERE username = ?";
+        String roleSql = "SELECT rolename FROM sys_role r INNER JOIN sys_user u ON r.roleid=u.roleid WHERE username = ?";
         jdbcRealm.setUserRolesQuery(roleSql);
 
 
@@ -51,7 +48,7 @@ public class JdbcRealm1Test {
                 "            INNER JOIN sys_resource AS rs ON rr.resourceid = rs.resourceid" +
                 "            INNER JOIN sys_role AS r ON rr.roleid = r.roleid" +
                 "            INNER JOIN sys_user AS u ON u.roleid = r.roleid" +
-                "            WHERE u.username = ?";
+                "            WHERE r.rolename = ?";
         jdbcRealm.setPermissionsQuery(permissionSql);
 
 //        1、构建SecurityManager环境
@@ -65,7 +62,7 @@ public class JdbcRealm1Test {
 //        获取认证的主体
         Subject subject = SecurityUtils.getSubject();
 //        通过用户名和密码获取UsernamePasswordToken
-        UsernamePasswordToken token = new UsernamePasswordToken("系统管理员", "456789");
+        UsernamePasswordToken token = new UsernamePasswordToken("系统管理员", "123456");
 //        通过token进行登录认证
         subject.login(token);
 //        打印出是否认证成功
