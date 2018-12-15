@@ -8,6 +8,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -25,6 +26,11 @@ public class CustomerRealm extends AuthorizingRealm {
 
     {
         userMap.put("admin", "123456");
+//        123456MD5加密处理（加密一次）
+        userMap.put("admin", "e10adc3949ba59abbe56e057f20f883e");
+
+//        123456+admin MD5加密处理（加密一次）
+        userMap.put("admin", "a66abb5684c45962d887564f08346e8d");
         super.setName("customerRealm");
     }
 
@@ -99,8 +105,11 @@ public class CustomerRealm extends AuthorizingRealm {
             return null;
         }
         // 认证后做授权处理，需要将获得认证的用户对象赋值给principal，授权处理时会用到
-        SimpleAuthenticationInfo authorizationInfo = new SimpleAuthenticationInfo("admin", password, "customerRealm");
-        return authorizationInfo;
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo("admin", password, "customerRealm");
+
+//        在返回身份认证信息之前设置好salt(这里的salt为:admin)
+        authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes("admin"));
+        return authenticationInfo;
     }
 
     /**

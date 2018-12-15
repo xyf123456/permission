@@ -3,6 +3,8 @@ package com.tt.permission;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.subject.Subject;
@@ -73,5 +75,11 @@ public class JdbcRealm1Test {
 //        检查权限
         subject.checkPermission("/permission");
 //        subject.checkPermissions("user:add","user:delete");
+    }
+
+    public static void main(String[] args) {
+//        Md5Hash md5Hash = new Md5Hash("123456");
+        Md5Hash md5Hash = new Md5Hash("123456","admin");
+        System.out.println(md5Hash.toString());
     }
 }

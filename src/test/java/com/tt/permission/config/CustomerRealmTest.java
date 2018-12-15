@@ -2,6 +2,7 @@ package com.tt.permission.config;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.subject.Subject;
@@ -26,6 +27,11 @@ public class CustomerRealmTest {
 //        SecurityManager通过设置不同类型的Realm来进行主体的验证
         defaultSecurityManager.setRealm(customerRealm);
 
+        //        创建HashedCredentialsMatcher
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setHashIterations(1);
+        matcher.setHashAlgorithmName("md5");
+        customerRealm.setCredentialsMatcher(matcher);
 
 //        2、主体提交认证请求
         SecurityUtils.setSecurityManager(defaultSecurityManager);
@@ -38,10 +44,10 @@ public class CustomerRealmTest {
 //        打印出是否认证成功
         System.out.println("isAuthenticated(是否认证):" + subject.isAuthenticated());
 //        检查角色
-        subject.checkRole("admin");
+//        subject.checkRole("admin");
 //        检查权限
 //        subject.checkPermission("/permission");
-        subject.checkPermissions("user:add","user:delete");
+//        subject.checkPermissions("user:add","user:delete");
     }
 
 }
