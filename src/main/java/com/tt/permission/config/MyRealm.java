@@ -78,6 +78,7 @@ public class MyRealm extends AuthorizingRealm {
         //2、判断密码
         // 认证后做授权处理，需要将获得认证的用户对象赋值给principal，授权处理时会用到
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), this.getName());
+//        在返回认证信息需要将盐的信息设置出来，否则无法身份认证
         info.setCredentialsSalt(ByteSource.Util.bytes("admin"));
         return info;
     }
