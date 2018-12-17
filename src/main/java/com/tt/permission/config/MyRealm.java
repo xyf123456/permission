@@ -8,6 +8,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
@@ -76,6 +77,8 @@ public class MyRealm extends AuthorizingRealm {
 
         //2、判断密码
         // 认证后做授权处理，需要将获得认证的用户对象赋值给principal，授权处理时会用到
-        return new SimpleAuthenticationInfo(user, user.getPassword(), this.getName());
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), this.getName());
+        info.setCredentialsSalt(ByteSource.Util.bytes("admin"));
+        return info;
     }
 }
