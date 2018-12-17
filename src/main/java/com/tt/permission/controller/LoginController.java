@@ -72,7 +72,9 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/index")
-    public String index() {
+    public String index(Model model) {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("currentuser",user.getUsername());
         return "index";
     }
 

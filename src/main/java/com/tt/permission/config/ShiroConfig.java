@@ -50,10 +50,9 @@ public class ShiroConfig {
         filterMap.put("/images/**", "anon");
         filterMap.put("/echarts/**", "anon");
         filterMap.put("/dologin", "anon");
-        filterMap.put("/index", "anon");
 
         // 配置退出过滤器
-        //        filterMap.put("/logout", "logout");
+        filterMap.put("/logout", "logout");
 
         // 配置授权过滤器
 
