@@ -1,5 +1,6 @@
 package com.tt.permission.config;
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -76,6 +77,12 @@ public class ShiroConfig {
 
         // 关联Realm
         defaultWebSecurityManager.setRealm(myRealm);
+
+        //        创建HashedCredentialsMatcher,设置加密匹配项
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setHashIterations(1);
+        matcher.setHashAlgorithmName("md5");
+        myRealm.setCredentialsMatcher(matcher);
 
         return defaultWebSecurityManager;
     }
